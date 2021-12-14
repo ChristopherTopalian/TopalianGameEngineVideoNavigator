@@ -1,0 +1,885 @@
+<!-- Dedicated to God the Father -->
+
+<!-- All Rights Reserved Christopher Topalian Copyright 2020-2021 -->
+
+<!-- Topalian Game Engine Video Navigator - YouTube Edition -->
+<!-- TGEVN-YE 001 -->
+
+<!-- The TGEVN-YE is Optimized for fast loading to showcase YouTube video reports -->
+ 
+<!-- 
+    CONTROLS
+    W is Up, S is Down, A is Left, D is Right.
+
+    SPEED
+    press numbers 1 to 9 to adjust Speed
+    press 0 - + BackSpace Home End for Super Speeds
+
+    TRANSPARENCY
+    press N for the player to be see-through
+    press M for solid
+-->
+
+<!--
+    Use the Chrome Browser for the Fastest Load Time and Performance.
+    Works nicely also in Firefox, Brave, and others.
+-->
+
+<!-- See the Code in Action
+    https://collegeofscripting.weebly.com/
+ -->
+
+<!-- See the Video Tutorials
+    https://youtube.com/scriptingcollege 
+-->
+
+<!-- See the GitHub Page for TGEVN
+    https://github.com/ChristopherTopalian/TopalianGameEngineVideoNavigator
+-->
+
+<!-- See the GitHub Page for TGEDN
+    https://github.com/ChristopherTopalian/TopalianGameEngineDataNavigator
+-->
+
+<html><head>
+<title>Topalian Game Engine Video Navigator - YouTube Edition</title>
+<style>
+
+ #thePlayer{
+    position: absolute;
+    width: 70px;  
+    height: 74px;
+    /* background: rgb(73, 100, 150); */
+    z-index: 1001;
+    word-wrap: break-word;
+    font-family: Tahoma;
+    line-height: 18px;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 4px;
+    text-align: center;
+    border-radius: 7px;
+    
+    /* if we choose to use the texture from our local folder */
+    /* background-image: url("boxingGlove.png"); */
+
+    /* or if we organize our project more with a local texture folder */
+    /* background-image: url("./texture/boxingGlove.png"); */
+
+    /* or if we decide to link to the texture that is located on a server */
+    background-image: url("https://collegeofscripting.weebly.com/uploads/6/4/4/8/64482293/boxingglove.png");
+
+    background-repeat: no-repeat;
+    background-position: center; 
+    background-size: 70px 84px;
+}
+
+#theBackground{
+    position: absolute;
+    width: 250000px;
+    height: 250000px;
+    background: black;
+    left: 0px;
+    top: 0px;
+    opacity: 1.0;
+    z-index: -99; 
+    background-image: url("https://collegeofscripting.weebly.com/uploads/6/4/4/8/64482293/stars-nice-edited_orig.png");   
+}
+
+body
+{
+    color:rgb(255, 255, 255); /*font color*/
+}
+
+.glowDedicationStyle
+{
+    text-shadow: 0 0 5px #FFF, 0 0 10px #FFF, 0 0 15px #FFF, 0 0 20px #18dcff, 0 0 30px #18b6ff, 0 0 40px #49FF18, 0 0 55px #00d9ff, 0 0 75px #00e1ff, 2px 2px 2px rgba(115,246,255,0);
+
+    font-size:60px;
+}
+
+.glowTitleStyle
+{
+    text-shadow: 0 0 5px #FFF, 0 0 10px #FFF, 0 0 15px #FFF, 0 0 20px #ff1878, 0 0 30px #f700ff, 0 0 40px #da21ff, 0 0 55px #ff008c, 0 0 75px #ff168b, 2px 2px 2px rgba(115,246,255,0);
+
+    font-size:80px;
+}
+
+textarea
+{
+    overflow-y: scroll;
+    padding: 0px 12px;
+}
+
+.ourButton
+{
+    /*width: 55px;*/
+    background-color: rgb(0, 77, 129);
+    border: solid 1px rgb(100, 100, 255);
+    color: white;
+    font-weight: normal;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 2px;
+    padding-bottom: 0px;
+    text-align: center;
+    text-decoration-style: double;
+    font-size: 15px;
+    border-radius: 7px;
+    opacity: 1.0;
+    margin: 2px;
+}
+.ourButton:hover
+{
+    background-color: rgb(6, 31, 47);
+}
+
+a:link
+{
+    color:rgb(110, 162, 255);
+}
+
+a:visited
+{
+    color:rgb(133, 134, 209);
+}
+
+.hrCompact
+{
+    background-color: rgb(255,255,255);
+    border: 0 none;
+
+    margin-top: 4px;
+    margin-bottom: 4px;
+
+    padding-top: 0.5px;
+    padding-bottom: 0.5px;
+}
+
+</style>
+
+<!-- IMPORTANT
+    Make sure that you have this js file in your folder,
+    or provide the url of the file as shown below.
+    It is the data. It is named TopalianDataBoxing.js
+-->
+
+<!-- We can name the data file anything that we want -->
+
+<!-- <script src="TopalianDataBoxing.js"></script> -->
+
+<script src = "https://collegeofscripting.weebly.com/uploads/6/4/4/8/64482293/topaliandataboxing.js"></script>
+
+</head>
+
+<body onload = "whenLoaded();">
+
+<!-- create the Player div-->
+<div id = "thePlayer" class = "box"></div>
+
+<!-- create the Background div -->
+<div id = "theBackground"></div>
+
+<div class = "glowDedicationStyle" style=position:absolute;top:500px;left:190px;>Dedicated to God the Father</div>
+
+<div class = "glowTitleStyle" style=position:absolute;top:850px;left:190px;>BDA EXCUSES<br>Lomachenko Edition</div>
+
+<span id="instructions" onclick="removeElement('instructions');" style=position:absolute;top:1057px;left:175px;><b>INSTRUCTIONS<br>Move with WASD<br>Speed is 1 2 3 4 5 6 7 8 9 0<br>Super Speed is - + Back Space Home End<br>Letter X to Start Mouse Position Mode<br>Letter V to End Mouse Position Mode</b></span>
+
+<script>
+
+function removeElement(theElement)
+{
+    //check if the element exists first
+    if(document.getElementById(theElement))
+    {
+        document.getElementById(theElement).remove();
+    }
+}
+
+function reloadOurVideo(theFrameId)
+{
+    document.getElementById(theFrameId).src = document.getElementById(theFrameId).src;
+}
+
+function rowOfVideos(theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2)
+{
+    theX -= sizeX;
+
+    let startTime;
+    let endTime;
+
+            //used with bdaBoxingComments array   
+    for(let i = 0; i < whichArray.length; i++)
+    {
+        startTime = secondsFromTimeCode(whichArray[i].startTime);
+        endTime = secondsFromTimeCode(whichArray[i].endTime);
+
+        //console.log(startTime + " and " + endTime);
+
+        if(whichArray[i].name == criteria1 && whichArray[i].description == criteria2)
+        {
+            //filter for a MONTH, meaning, SHOW ONLY 1 month
+            //if(whichArray[i].date.substring(0,2) == 3)
+
+            //filter for Multiple MONTHS
+            //if(whichArray[i].date.substring(0,2) == 8 || whichArray[i].date.substring(0,2) == 9)
+
+            //filter for a DATE
+            //if(whichArray[i].date.substring(0,10) == "02/29/2018")
+
+            //filter for a Multiple DATES
+            //if(whichArray[i].date.substring(0,10) == "02/29/2018" || whichArray[i].date.substring(0,10) == "02/29/2020")
+
+            //filter for a DAY, of any month, of any year
+            //if(whichArray[i].date.substring(3,5) == 2)
+
+            //filter for a YEAR
+            //if(whichArray[i].date.substring(6,10) == 2019)
+
+            //filter for MULTIPLE YEARS
+            //if(whichArray[i].date.substring(6,10) == 2019 || whichArray[i].date.substring(6,10) == 2020)
+
+            //filter for MONTH and YEAR
+            //if(whichArray[i].date.substring(0,2) == 2 && whichArray[i].date.substring(6,10) == 2020)
+
+            //You can replace the if statement below,
+            //with one of the options above.
+            if(whichArray) //shows all items
+            {
+                //columns across
+                theX = theX + sizeX + 200;
+
+                //TYPE OF ELEMENT TO CREATE
+                let createCategoriesTitle = document.createElement("div");
+
+                //POSITION
+                createCategoriesTitle.style.position = "absolute";
+                createCategoriesTitle.style.left = theX +'px';
+                createCategoriesTitle.style.top = theY - 200 + 'px';
+
+                //FONT
+                createCategoriesTitle.style.fontFamily = "tahoma";
+                createCategoriesTitle.style.fontWeight = "bold";
+                createCategoriesTitle.style.fontSize = 17 + 'px';
+                createCategoriesTitle.style.color = "white";
+                createCategoriesTitle.style.textAlign = "center";
+
+                //LAYER
+                createCategoriesTitle.style.zIndex = "10";
+
+                //BACKGROUND COLOR
+                createCategoriesTitle.style.background = "black";
+
+                //SIZE
+                createCategoriesTitle.style.width = sizeX +'px';
+                //createCategoriesTitle.style.height = 400 +'px';
+
+                //PADDING
+                createCategoriesTitle.style.paddingTop = 4 +'px';
+                createCategoriesTitle.style.paddingBottom = 4 +'px';
+
+                //BORDER
+                createCategoriesTitle.style.border = "solid 2px rgba(100,100,255,1.0)";
+
+                //CONTENT
+                createCategoriesTitle.innerHTML = '<b style="color:aqua">'+whichArray[i].title+'' + "</b><br>" + "upload date " + ''+whichArray[i].date+'' + "<br>" +'<a href=\''+ whichArray[i].url + "\?start=" + startTime + "&end=" + endTime + '\' target="_blank">Link</a><br>'+
+                ''+whichArray[i].url + "\?start=" + startTime + "&end=" + endTime + "<br>" + ''+whichArray[i].startTime+''+ " to "+ ''+whichArray[i].endTime+'' + "<br>";
+
+                createCategoriesTitle.innerHTML += '<b style="color:yellow;font-Size:30px">'+criteria1+'' +" " +criteria2+'' + "<br>";
+
+                //ID
+                createCategoriesTitle.id = "Title" + Math.floor(300000 + Math.random() * 9700000);
+
+                //TYPE OF ELEMENT TO CREATE
+                let sideText =  document.createElement("textarea");
+
+                //POSITION
+                sideText.style.position = "absolute";
+                sideText.style.left = theX - 149 + 'px';
+                sideText.style.top = theY + 2 + 'px';
+
+                //SIZE
+                sideText.style.width = 150 + "px"; //sizeX +'px';
+                sideText.style.height = 400 + "px";
+
+                //PADDING
+                sideText.style.paddingTop = 15 +'px';
+                sideText.style.paddingBottom = 4 +'px';
+
+                //FONT
+                sideText.style.fontFamily = "arial";
+                sideText.style.fontWeight = "bold";
+                sideText.style.fontSize = "15px";
+                sideText.style.color = "white";
+                sideText.style.textAlign = "left";
+
+                //LAYER
+                sideText.style.zIndex = "10";
+
+                //BACKGROUND COLOR
+                sideText.style.background = "black";
+
+                //BORDER
+                sideText.style.border = "solid 2px rgba(100,100,255,1.0)";
+
+                //ID
+                sideText.id = "SideText" + Math.floor(300000 + Math.random() * 9700000);
+
+                //CONTENT
+                sideText.innerHTML = whichArray[i].words;
+
+                //DETAILS BUTTON
+                createCategoriesTitle.innerHTML +='<button onclick="videoDetails(\''+whichArray[i].words+'\');" class="ourButton">Details</button>';
+
+                //TYPE OF ELEMENT TO CREATE
+                let makeVideoHere = document.createElement("iframe");
+
+                //ID
+                makeVideoHere.id = "Video" + Math.floor(300000 + Math.random() * 9700000);
+
+                //SOURCE
+                makeVideoHere.src = whichArray[i].url + "?start=" + startTime + "&end=" + endTime;
+
+                //CURRENT TIME
+                makeVideoHere.currentTime = whichArray[i].url + "?start=" + startTime + "&end=" + endTime;
+
+                //POSITION
+                makeVideoHere.style.position = "absolute";
+                makeVideoHere.style.left = theX +'px';
+                makeVideoHere.style.top = theY + 'px';
+
+                //SIZE
+                makeVideoHere.style.width = sizeX +'px';
+                makeVideoHere.style.height = sizeY +'px';
+
+                //LAYER
+                makeVideoHere.style.zIndex = "1";
+
+                //FONT
+                makeVideoHere.style.fontFamily = "tahoma";
+                makeVideoHere.style.fontWeight = "bold";
+                makeVideoHere.style.fontSize = "xx-large";
+                makeVideoHere.style.color = "aqua";
+                makeVideoHere.style.textAlign = "center";
+
+                //BACKGROUND COLOR
+                makeVideoHere.style.background = "black";
+
+                //BORDER
+                makeVideoHere.style.border = "solid 2px rgba(100,100,255,1.0)";
+
+                //RELOAD BUTTON
+                createCategoriesTitle.innerHTML += '<button class="ourButton" onclick=reloadOurVideo(\"'+makeVideoHere.id+'\")>Reload</button>';
+
+                //PRINT BUTTON
+                createCategoriesTitle.innerHTML += '<button onclick="printTextAreaAndDiv(\''+createCategoriesTitle.id+'\', \''+sideText.id+'\');" class="ourButton">Print</button>';
+
+                document.body.append(createCategoriesTitle);
+                document.body.append(makeVideoHere);
+                document.body.append(sideText);
+            }
+        }
+    }
+}
+
+function secondsFromTimeCode(fullTimeCode)
+{
+    if(!fullTimeCode) fullTimeCode = '00:00:00';
+    let theStringSeconds = fullTimeCode;
+    let splitValue = theStringSeconds.split(":");
+
+    let secondsOnly = parseInt(splitValue[2]);
+    let secondsFromMinutes = parseInt(splitValue[1]) * 60;
+    let secondsFromHours = parseInt(splitValue[0]) * 3600;
+
+    let calculatedSeconds = secondsFromHours + secondsFromMinutes + secondsOnly;
+    //now seconds variable is an array, 1:2:3
+
+    return calculatedSeconds;
+}
+
+function printTextAreaAndDiv(whichDiv, whichTextArea) 
+{ 
+    let mywindow = window.open('', 'PRINT', 'height=800,width=1000 top=50, left=100');
+
+    mywindow.document.write('<style>img{width:75%;</style></head><body>');
+
+    mywindow.document.write('<h4>' + document.title  + '</h4>');
+
+    mywindow.document.write(document.getElementById(whichDiv).innerHTML + "<hr>" + document.getElementById(whichTextArea).value);
+    
+    mywindow.print();
+
+    //close window after printing
+    //mywindow.close();
+} 
+
+function videoDetails(theDetails) 
+{ 
+    let mywindow;
+
+    mywindow = window.open('', 'DETAILS', 'height=315,width=350 top=205, left=250');
+
+    mywindow.document.write('<style>img{width:75%;</style></head><body>');
+
+    mywindow.document.write('<h4>' + document.title  + '</h4>');
+
+    mywindow.document.write(theDetails);        
+}
+
+function messageStays()
+{
+    //TYPE OF ELEMENT TO CREATE
+    let startingText = document.createElement("div");
+
+    //POSITION
+    startingText.style.position =  "absolute";
+    startingText.style.left = 350 +'px';
+    startingText.style.top = 230 + 'px';
+
+    //SIZE
+    startingText.style.width = 315 +'px';
+    startingText.style.height = 145 +'px';
+
+    //PADDING effects size
+    startingText.style.paddingLeft = "20px";
+    startingText.style.paddingRight = "20px";
+    startingText.style.paddingTop = "4px";
+
+    //LAYER
+    startingText.style.zIndex = "998";
+
+    //FONT
+    startingText.style.fontFamily = "arial";
+    startingText.style.fontWeight = "900";
+    startingText.style.fontSize = "13pt";
+    startingText.style.color = "white";
+    startingText.style.textAlign = "center";
+
+    //BACKGROUND COLOR
+    startingText.style.background = "black";
+
+    //BORDER
+    //startingText.style.border = "solid 2px rgba(100,100,255,1.0)";
+    startingText.style.borderStyle = "solid";
+    startingText.style.borderWidth = "2px";
+    startingText.style.borderColor = "rgba(100,100,255,1.0)";
+    startingText.style.borderRadius= "10px";
+
+    //We Build our message using innerHTML
+    startingText.innerHTML+= '<div><span style="font-family:tahoma,corbel,arial;font-size:16pt">Dedicated to God the Father</span><hr class="hrCompact">';
+
+    startingText.innerHTML+= '<span style="color:rgb(126, 203, 255);line-height:19px">TOPALIAN GAME ENGINE<br>VIDEO NAVIGATOR<br>(YouTube Edition)</span><br>';
+
+    startingText.innerHTML+= '<span style="font-family:arial; font-style:normal; line-height:20px">by Christopher Topalian</span><br>';
+
+    startingText.innerHTML+= '<a href="https://github.com/ChristopherTopalian" target="_blank">GitHub.com/ChristopherTopalian</a>';
+
+    //ID
+    startingText.id = "messageStays";
+
+    document.body.append(startingText);
+}
+
+/*
+    SORT SORT SORT SORT
+*/
+//We can use this SORT FUNCTION BELOW to sort the array.
+//But, we could alternatively use the spreadsheet tools to sort the data.
+//Either way is fine.
+//For Ascending order use a.date - b.date
+//For Descending order use b.date - a.date
+
+                                //ascending or descending
+function sortByDate(whichArray, direction) 
+{
+    if(direction == "up")   // ASCENDING is a.date - b.date
+    {
+        whichArray.sort(function(a,b){return new Date(a.date) - new Date(b.date);});
+    }
+    else if(direction == "down") //DESCENDING is b.date - a.date
+    {
+        whichArray.sort(function(a,b){return new Date(b.date) - new Date(a.date);});
+    }
+}
+
+/*
+    We include which arrays we want to sort
+*/
+function sortIt()
+{ 
+    //sortByDate(bdaBoxingComments, "down"); //Descending
+
+    //sortByDate(bdaBoxingComments, "up"); //Ascending
+}
+
+/*
+    PLAYER PLAYER PLAYER PLAYER
+*/
+/* Player's start position, speed and id */
+let ourPlayer =
+{
+    x: 480,
+    y: 1065,
+    speedMultiplier: 4,
+    playerId: document.getElementById("thePlayer")
+};
+
+/*
+    CONTROLS CONTROLS CONTROLS CONTROLS
+*/
+/* The Keyboard Letter Codes that are Being Pressed */
+let keyboard = { };
+    keyboard.UP = 87;     //87 is w, 38 is up arrow
+    keyboard.DOWN = 83;   //83 is s, 40 is down arrow
+    keyboard.LEFT = 65;   //65 is a, 37 is left arrow
+    keyboard.RIGHT = 68;  //68 is d, 39 is right arrow       
+
+function theControls(e)
+{            
+    //SPEED
+    if(e.keyCode == 192) //tilda
+    {
+        ourPlayer.speedMultiplier = 0.5;
+        ourPlayer.playerId.innerHTML = "Speed 0.5";
+
+        //after we choose the speed, it shows the speed value for a few moments, and then removes the text
+        setTimeout(function(){ document.getElementById("thePlayer").innerHTML=""; }, 3000);
+    }
+    if(e.keyCode == 49 || e.keyCode == 97) //number 1, or numpad 1
+    {
+        ourPlayer.speedMultiplier = 1;
+        ourPlayer.playerId.innerHTML = "Speed 1";
+
+        setTimeout(function(){ document.getElementById("thePlayer").innerHTML=""; }, 3000);
+    }
+    if(e.keyCode == 50 || e.keyCode == 98) //number 2
+    {
+        ourPlayer.speedMultiplier = 2;
+        ourPlayer.playerId.innerHTML = "Speed 2";
+
+        setTimeout(function(){ document.getElementById("thePlayer").innerHTML=""; }, 3000);
+    }
+    if(e.keyCode == 51 || e.keyCode == 99) //number 3
+    {
+        ourPlayer.speedMultiplier = 3;
+        ourPlayer.playerId.innerHTML = "Speed 3";
+
+        setTimeout(function(){ document.getElementById("thePlayer").innerHTML=""; }, 3000);
+    }
+    if(e.keyCode == 52 || e.keyCode == 100) //number 4
+    {
+        ourPlayer.speedMultiplier = 4;
+        ourPlayer.playerId.innerHTML = "Speed 4";
+
+        setTimeout(function(){ document.getElementById("thePlayer").innerHTML=""; }, 3000);
+    }
+    if(e.keyCode == 53 || e.keyCode == 101) //number 5
+    {
+        ourPlayer.speedMultiplier = 5;
+        ourPlayer.playerId.innerHTML = "Speed 5";
+
+        setTimeout(function(){ document.getElementById("thePlayer").innerHTML=""; }, 3000);
+    }
+    if(e.keyCode == 54  || e.keyCode == 102) //number 6
+    {
+        ourPlayer.speedMultiplier = 10;
+        ourPlayer.playerId.innerHTML = "Speed 10";
+
+        setTimeout(function(){ document.getElementById("thePlayer").innerHTML=""; }, 3000);
+    }
+    if(e.keyCode == 55 || e.keyCode == 103) //number 7
+    {
+        ourPlayer.speedMultiplier = 15;
+        ourPlayer.playerId.innerHTML = "Speed 15";
+
+        setTimeout(function(){ document.getElementById("thePlayer").innerHTML=""; }, 3000);
+    }
+    if(e.keyCode == 56 || e.keyCode == 104) //number 8
+    {
+        ourPlayer.speedMultiplier = 25;
+        ourPlayer.playerId.innerHTML = "Speed 25";
+
+        setTimeout(function(){ document.getElementById("thePlayer").innerHTML=""; }, 3000);
+    }
+    if(e.keyCode == 57 || e.keyCode == 105) //number 9
+    {
+        ourPlayer.speedMultiplier = 30;
+        ourPlayer.playerId.innerHTML = "Speed 30";
+
+        setTimeout(function(){ document.getElementById("thePlayer").innerHTML=""; }, 3000);
+    }
+    if(e.keyCode == 48 || e.keyCode == 96) //number 0
+    {
+        ourPlayer.speedMultiplier = 50;
+        ourPlayer.playerId.innerHTML = "Speed 50";
+
+        setTimeout(function(){ document.getElementById("thePlayer").innerHTML=""; }, 3000);
+    }
+    if(e.keyCode == 189) //dash
+    {
+        ourPlayer.speedMultiplier = 100;
+        ourPlayer.playerId.innerHTML = "Speed 100";
+
+        setTimeout(function(){ document.getElementById("thePlayer").innerHTML=""; }, 3000);
+    }
+    if(e.keyCode == 187) //+
+    {
+        ourPlayer.speedMultiplier = 200;
+        ourPlayer.playerId.innerHTML = "Speed 200";
+
+        setTimeout(function(){ document.getElementById("thePlayer").innerHTML=""; }, 3000);
+    }
+    if(e.keyCode == 8) //back space button
+    {
+        ourPlayer.speedMultiplier = 400;
+        ourPlayer.playerId.innerHTML = "Speed 400";
+
+        setTimeout(function(){ document.getElementById("thePlayer").innerHTML=""; }, 3000);
+    }
+    if(e.keyCode == 36) //Home Button
+    {
+        ourPlayer.speedMultiplier = 800;
+        ourPlayer.playerId.innerHTML = "Speed 800";
+
+        setTimeout(function(){ document.getElementById("thePlayer").innerHTML=""; }, 3000);
+    }
+    if(e.keyCode == 35) //End Button
+    {
+        ourPlayer.speedMultiplier = 1600;
+        ourPlayer.playerId.innerHTML = "Speed 1600";
+
+        setTimeout(function(){ document.getElementById("thePlayer").innerHTML=""; }, 3000);
+    } 
+
+    //TRANSPARENCY
+    if(e.keyCode == 77) //Letter m
+    {
+        ourPlayer.playerId.style.opacity = "1.0";
+    }
+    if(e.keyCode == 78) //Letter n
+    {
+        ourPlayer.playerId.style.opacity = "0.2";
+        ourPlayer.playerId.innerHTML= "";
+    }
+
+    if(e.keyCode == 88) //Letter x
+        {
+            //listen for mouse clicks
+            window.addEventListener("click", mousePos, false);
+
+            ourPlayer.playerId.innerHTML = "<br><br><br><br>Left Click for<br>Mouse Position";
+        }
+
+        if(e.keyCode == 86) //Letter v
+        {
+            //remove the listen for mouse clicks
+            window.removeEventListener("click", mousePos, false);
+
+            //clear the text of the player
+            ourPlayer.playerId.innerHTML = ' ';
+        }
+
+    //Find out which key was pressed
+    let theKeyCode = e.keyCode || e.which;
+    keyboard[theKeyCode] = e.type == 'keydown';
+};
+         
+/* Character Movement Updating */
+let movePlayer = function(theX, theY){
+    ourPlayer.x += (theX || 0) * ourPlayer.speedMultiplier;
+    ourPlayer.y += (theY || 0) * ourPlayer.speedMultiplier;
+
+    ourPlayer.playerId.style.left = ourPlayer.x + 'px';
+    ourPlayer.playerId.style.top = ourPlayer.y + 'px';
+};
+    
+/* Player Controls */
+let playerMotion = function(){
+    if(keyboard[keyboard.LEFT]){
+        movePlayer(-1,0);
+    }
+    if(keyboard[keyboard.RIGHT]){
+        movePlayer(1,0);
+    }
+    if(keyboard[keyboard.UP]){
+        movePlayer(0,-1);
+    }
+    if(keyboard[keyboard.DOWN]){
+        movePlayer(0,1);
+    }
+};
+        
+/*
+    CAMERA CAMERA CAMERA CAMERA
+*/
+//Camera Follows the Player
+function cameraFollowsPlayer()
+{
+    ourPlayer.playerId.scrollIntoView({block: "center", inline: "center"});
+}
+
+/*
+    Get the POSITION of our MOUSE ARROW
+*/
+function mousePos(theEvent)
+{
+    let mouseX = theEvent.pageX;
+    let mouseY = theEvent.pageY;
+    let mousePos = "Mouse" + "<br>" + "X " + mouseX + "<br>"+ "Y " + mouseY;
+    console.log(mousePos);
+    ourPlayer.playerId.innerHTML= mousePos;
+}
+
+/*
+    ADDING OUR CONTENT TO THE WORLD
+    using our method of creating Rows of content
+*/
+
+//Content starts at the specified y Position
+let yPos= 1400;
+
+//Content is Positioned in Rows Based on the Functions Place in the Array
+
+let videoWidth = 600;
+let videoHeight = 400;
+
+function containerBoxing()
+{
+    let boxingContentArray = 
+    [
+        //Show Selected Videos of the array named bdaBoxingComments
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "Bucho", "size excuse")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "BDA", "size excuse")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "Recognize", "size excuse")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "Bucho", "shoulder excuse")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "BDA", "shoulder excuse")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "Recognize", "shoulder excuse")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "Gonzalo", "shoulder excuse")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "Bucho", "judges excuse")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "BDA", "judges excuse")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "Recognize", "judges excuse")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "Precise", "judges excuse")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "Recognize", "promoter excuse")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "Apology", "compubox excuse")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "BDA", "funny")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, 
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "Bucho", "funny")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "Recognize", "funny")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "Pete", "funny")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "Precise", "funny")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "BDA", "attacks person")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "Bucho", "attacks person")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "Recognize", "attacks person")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "Apology", "attacks person")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "Dee", "attacks person")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "Precise", "attacks person")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "Bucho", "mockery")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "Recognize", "mockery")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "Dee", "mockery")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "Pete", "mockery")},
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+
+        function(){ rowOfVideos(100, yPos, videoWidth, videoHeight, bdaBoxingComments, "Precise", "low blow excuse")}
+        //theX, theY, sizeX, sizeY, whichArray, criteria1, criteria2
+    ];
+
+    for (i = 0; i < boxingContentArray.length; i++)
+    {
+        boxingContentArray[i]();
+        yPos = yPos + 800;
+    }
+}
+
+//// When the Page Loads ////
+function whenLoaded()
+{
+    //sorts the array
+    //sortIt();
+
+    //loads the content to the page
+    containerBoxing();
+
+    //opens message at yPos
+    messageStays();
+
+    //listen for keydown events
+    window.addEventListener("keydown", theControls, false);
+
+    //listen for keyup events
+    window.addEventListener("keyup", theControls, false);
+}
+
+/*
+    THE GAME LOOP
+*/
+function updateWorld()
+{
+    playerMotion();
+
+    cameraFollowsPlayer();   
+
+    requestAnimationFrame(updateWorld);  
+}
+updateWorld();
+    
+//Update the Position of the player
+movePlayer();
+    
+</script>
+</body>
+</html>
