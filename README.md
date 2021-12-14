@@ -1,3 +1,3 @@
 # TopalianGameEngineVideoNavigator
 
-Under Contruction and almost ready. Check back soon.
+Under Construction and almost ready. Check back soon.
